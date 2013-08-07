@@ -1,0 +1,4 @@
+name: MotoServer
+main: com.mike724.motoserver.MotoServer
+version: ${version}
+authors: [Mike724, Dakota628]

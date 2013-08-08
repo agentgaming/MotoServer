@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.ArrayList;
 
 public class DebugInterface {
-    private Inventory inv;
+    /*private Inventory inv;
 
     private BukkitTask superMoveTask;
 
@@ -295,5 +295,5 @@ public class DebugInterface {
         public boolean a(EntityHuman entityhuman) {
             return true;
         }
-    }
+    }*/
 }

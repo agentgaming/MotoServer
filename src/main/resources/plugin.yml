@@ -2,3 +2,7 @@ name: MotoServer
 main: com.mike724.motoserver.MotoServer
 version: ${version}
 authors: [Mike724, Dakota628]
+commands:
+   net:
+      description: This is a network command.
+      usage: /net [args...]

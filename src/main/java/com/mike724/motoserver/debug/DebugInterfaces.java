@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DebugInterfaces {
-    private static HashMap<Player, DebugInterface> interfaces = new HashMap<Player, DebugInterface>();
+    /*private static HashMap<Player, DebugInterface> interfaces = new HashMap<Player, DebugInterface>();
     private static ArrayList<Player> debugging = new ArrayList<Player>();
 
     private static String potatoName = "Rotten Potato";
@@ -67,5 +67,5 @@ public class DebugInterfaces {
 
     public static ArrayList<Player> getDebugging() {
         return debugging;
-    }
+    }*/
 }

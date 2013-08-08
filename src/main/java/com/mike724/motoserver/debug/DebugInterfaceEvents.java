@@ -1,6 +1,6 @@
 package com.mike724.motoserver.debug;
 import com.mike724.motoloader.MotoLoader;
-import com.mike724.networkapi.NetworkRank;
+//import com.mike724.networkapi.NetworkRank;
 import net.minecraft.server.v1_6_R2.RecipesFurnace;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,7 +20,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 public class DebugInterfaceEvents implements Listener {
-
+    /*
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent e) {
         if (DebugInterfaces.isRottenPotato(e.getCurrentItem())) {
@@ -174,4 +174,5 @@ public class DebugInterfaceEvents implements Listener {
             p.sendMessage("Your Rotten Potato has been enabled!");
         }
     }
+    */
 }

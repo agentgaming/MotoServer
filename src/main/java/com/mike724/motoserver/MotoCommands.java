@@ -26,7 +26,7 @@ public class MotoCommands implements CommandExecutor {
                     md.addData("name",args[1]);
                     if(args.length >= 3) {
                         String msg = "";
-                        for(int i = 2; i < args.length; i++) msg += args[i];
+                        for(int i = 2; i < args.length; i++) msg += args[i] + " ";
                         md.addData("message",msg);
                     }
                     MotoServer.getInstance().getMotoPush().push(md);

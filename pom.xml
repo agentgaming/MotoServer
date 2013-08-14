@@ -12,7 +12,7 @@
         </repository>
         <repository>
             <id>AGNRepo</id>
-            <url>scp://agnmaven@mike724.com/var/lib/jenkins/.m2/repository</url>
+            <url>https://mike724.com/repo/content/repositories/agentgaming-release/</url>
         </repository>
     </repositories>
     <build>
@@ -56,9 +56,16 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>LATEST</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.mike724.motoapi</groupId>
             <artifactId>MotoAPI</artifactId>
-            <version>LATEST</version>
+            <version>RELEASE</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

@@ -16,6 +16,7 @@ public class MotoServer extends JavaPlugin {
     private static MotoServer instance;
 
     private MotoPush motoPush;
+    private DataStorage dataStorage;
 
     private HashMap<String,NetworkPlayer> networkPlayers = new HashMap<>();
 
@@ -38,11 +39,22 @@ public class MotoServer extends JavaPlugin {
             IOUtils.closeQuietly(is);
         }
 
+        //Setup DataStorage
+        try {
+            dataStorage = new DataStorage("jxBkqvpe0seZhgfavRqB","RXaCcuuQcIUFZuVZik9K","nXWvOgfgRJKBbbzowle1");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Couldn't setup DataStorage... stopping");
+            this.getServer().shutdown();
+        }
+
         //Setup MotoPush
         try {
             motoPush = new MotoPush();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Couldn't setup MotoPush... stopping");
+            this.getServer().shutdown();
         }
 
         //Setup the event listener
@@ -68,7 +80,7 @@ public class MotoServer extends JavaPlugin {
     }
 
     public DataStorage getDataStorage() {
-        return null;
+        return dataStorage;
     }
 
     protected void addNetworkPlayer(NetworkPlayer np) {

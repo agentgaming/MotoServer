@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mike724.motoserver</groupId>
     <artifactId>MotoServer</artifactId>
-    <version>0.1</version>
+    <version>${env.BUILD_NUMBER}</version>
     <name>MotoServer</name>
     <url>http://www.mike724.com/</url>
     <repositories>

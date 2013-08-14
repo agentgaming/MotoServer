@@ -70,4 +70,10 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>AGNRepo</id>
+            <url>https://mike724.com/repo/content/repositories/agentgaming-release</url>
+        </repository>
+    </distributionManagement>
 </project>

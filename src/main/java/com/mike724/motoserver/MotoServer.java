@@ -56,14 +56,6 @@ public class MotoServer extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-        //Set all players to offline when the server goes down
-        HashMap<Object,String> playerObjects = new HashMap<>();
-        for(NetworkPlayer np : networkPlayers.values()) {
-            np.setOnline(false);
-            playerObjects.put((Object) np, np.getPlayer());
-        }
-        this.getDataStorage().writeObjects(playerObjects);
-
         //Uh, oh
         this.getLogger().info("MotoServer Disabled");
 

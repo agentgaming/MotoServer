@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.mike724.motoapi</groupId>
             <artifactId>MotoAPI</artifactId>
-            <version>RELEASE</version>
+            <version>14</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

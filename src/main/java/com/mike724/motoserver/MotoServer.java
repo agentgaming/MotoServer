@@ -16,8 +16,8 @@ public class MotoServer extends JavaPlugin {
     private Storage storage;
     private String externalIP;
 
-	@Override
-	public void onEnable() {
+    @Override
+    public void onEnable() {
         //Set our instance
         instance = this;
 
@@ -58,16 +58,16 @@ public class MotoServer extends JavaPlugin {
         getCommand("net").setExecutor(new MotoCommands(this));
 
         this.getLogger().info("MotoServer Enabled");
-	}
-	
-	@Override
-	public void onDisable() {
+    }
+
+    @Override
+    public void onDisable() {
         //Uh, oh
         this.getLogger().info("MotoServer Disabled");
 
         //If we go down, the server does too!!
         this.getServer().shutdown();
-	}
+    }
 
     public MotoPush getMotoPush() {
         return motoPush;

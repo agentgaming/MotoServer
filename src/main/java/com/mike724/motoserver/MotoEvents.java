@@ -20,7 +20,7 @@ public class MotoEvents implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent e) {
         //We aren't connected to MotoPush so we cannot accept new connections
-        if(!MotoServer.getInstance().getMotoPush().isConnected()) {
+        if (!MotoServer.getInstance().getMotoPush().isConnected()) {
             e.setResult(PlayerLoginEvent.Result.KICK_FULL);
             e.setKickMessage("This server is unable to connect to the network!");
             return;
@@ -39,16 +39,16 @@ public class MotoEvents implements Listener {
             isOnline = false;
         }
 
-        if(isOnline) {
+        if (isOnline) {
             e.setResult(PlayerLoginEvent.Result.KICK_FULL);
             e.setKickMessage("You are already logged in to another server!");
         } else {
-            NetworkPlayer np = (NetworkPlayer)storage.getObject(playerName, NetworkPlayer.class);
-            if(np==null) {
+            NetworkPlayer np = (NetworkPlayer) storage.getObject(playerName, NetworkPlayer.class);
+            if (np == null) {
                 storage.cacheObject(playerName, new NetworkPlayer(playerName));
             }
 
-            if(np.isBanned()) {
+            if (np.isBanned()) {
                 e.setResult(PlayerLoginEvent.Result.KICK_BANNED);
                 e.setKickMessage("You are banned from the network!");
             } else {
@@ -64,7 +64,7 @@ public class MotoEvents implements Listener {
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
-        if(storage.cacheContains(playerName, NetworkPlayer.class)) {
+        if (storage.cacheContains(playerName, NetworkPlayer.class)) {
             mp.cmd("pd", e.getPlayer().getName());
             //Saves object AND removes from cache (false boolean)
             storage.saveObject(playerName, NetworkPlayer.class, false);
@@ -78,7 +78,7 @@ public class MotoEvents implements Listener {
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
-        if(storage.cacheContains(playerName, NetworkPlayer.class)) {
+        if (storage.cacheContains(playerName, NetworkPlayer.class)) {
             mp.cmd("pd", e.getPlayer().getName());
             //Saves object AND removes from cache (false boolean)
             storage.saveObject(playerName, NetworkPlayer.class, false);
@@ -89,7 +89,7 @@ public class MotoEvents implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMotoPush(MotoPushEvent e) {
 
-        switch(e.getPushData().getCommand()) {
+        switch (e.getPushData().getCommand()) {
             case "kick":
                 kick(e);
                 break;
@@ -101,12 +101,12 @@ public class MotoEvents implements Listener {
 
     private void kick(MotoPushEvent e) {
         String name = e.getPushData().getData().get("name");
-        if(name == null || name == "") return;
+        if (name == null || name == "") return;
 
         Player p = MotoServer.getInstance().getServer().getPlayerExact(name);
-        if(p != null) {
+        if (p != null) {
             String message = e.getPushData().getData().get("message");
-            if(message == null) {
+            if (message == null) {
                 p.kickPlayer("Kicked by network!");
             } else {
                 p.kickPlayer(message);

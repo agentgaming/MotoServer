@@ -1,8 +1,15 @@
 package com.mike724.motoserver.debug;
 
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class DebugInterfaces {
-    /*private static HashMap<Player, DebugInterface> interfaces = new HashMap<Player, DebugInterface>();
-    private static ArrayList<Player> debugging = new ArrayList<Player>();
+    private static HashMap<Player, DebugInterface> interfaces = new HashMap<>();
+    private static ArrayList<Player> debugging = new ArrayList<>();
 
     private static String potatoName = "Rotten Potato";
 
@@ -60,5 +67,5 @@ public class DebugInterfaces {
 
     public static ArrayList<Player> getDebugging() {
         return debugging;
-    }*/
+    }
 }

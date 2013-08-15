@@ -1,28 +1,45 @@
 package com.mike724.motoserver.debug;
 
+import com.mike724.motoserver.MotoServer;
+import net.minecraft.server.v1_6_R2.ContainerAnvil;
+import net.minecraft.server.v1_6_R2.EntityHuman;
+import net.minecraft.server.v1_6_R2.EntityPlayer;
+import net.minecraft.server.v1_6_R2.Packet100OpenWindow;
+import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
+
 public class DebugInterface {
-    /*private Inventory inv;
+    private Inventory inv;
 
     private BukkitTask superMoveTask;
 
     private ArrayList<String> enabledMods;
     private Player p;
 
-    private Boolean[] canEnable = {true, true, true, true, true, true, false, false, false, true, false, false, false, true, true};
+    private Boolean[] canEnable = {true, true, true, true, true, true, false, false, false, true, false, false, false, true, true, false};
 
-    private Integer[] blocks = {288, 7, 49, 399, 368, 33, 384, 353, 276, 119, 393, 339, 335, 54, 46};
+    private Integer[] blocks = {288, 7, 49, 399, 368, 33, 384, 353, 276, 119, 393, 339, 335, 54, 46, 264};
 
-    private String[] mods = {"Fly", "God", "Demigod", "Super Move", "Tele-click", "Global Debug", "Give 10 levels", "Speed", "Strength", "Vanish", "Feed", "Heal", "Clear Effects", "Inventory Override", "Block Place/Break Override"};
+    private String[] mods = {"Fly", "God", "Demigod", "Super Move", "Tele-click", "Global Debug", "Give 10 levels", "Speed", "Strength", "Vanish", "Feed", "Heal", "Clear Effects", "Inventory Override", "Block Place/Break Override", "Op Me!"};
 
     private String[] desc = {"Allows you to fly", "Makes you invincible, doesn't show hits", "Makes you invincible, shows hits"
             , "Allows you to move in any direction quickly", "Teleport where you click", "Enables debug options for other network plugins",
             "Gain 10 levels of experience", "Gives you speed effect", "Gives you Strength Effect", "Makes you completely invisible",
-            "Replenishes your Hunger", "Heals your health", "Clears any potion effects on you", "Allows you to open any inventory", "Allows you to break/place any block"};
+            "Replenishes your Hunger", "Heals your health", "Clears any potion effects on you", "Allows you to open any inventory", "Allows you to break/place any block", "Ops you on the current server"};
 
     public DebugInterface(Player p) {
         this.p = p;
         this.enabledMods = new ArrayList<String>();
-        inv = MotoLoader.getInstance().getServer().createInventory(p, 36, "Rotten Potato - " + p.getName());
+        inv = MotoServer.getInstance().getServer().createInventory(p, 36, "Rotten Potato - " + p.getName());
 
         //Add all the base mods
         for (int i = 0; i < mods.length; i++) {
@@ -117,7 +134,7 @@ public class DebugInterface {
             case 3:
                 if (!enabled) {
                     enableMod(slot);
-                    superMoveTask = MotoLoader.getInstance().getServer().getScheduler().runTaskTimerAsynchronously(MotoLoader.getInstance(),superMove,1,1);
+                    superMoveTask = MotoServer.getInstance().getServer().getScheduler().runTaskTimerAsynchronously(MotoServer.getInstance(), superMove, 1, 1);
                 } else {
                     disableMod(slot);
                     superMoveTask.cancel();
@@ -224,13 +241,13 @@ public class DebugInterface {
     }
 
     private void showToAll() {
-        for (Player h : MotoLoader.getInstance().getServer().getOnlinePlayers()) {
+        for (Player h : MotoServer.getInstance().getServer().getOnlinePlayers()) {
             h.showPlayer(p);
         }
     }
 
     private void hideToAll() {
-        for (Player h : MotoLoader.getInstance().getServer().getOnlinePlayers()) {
+        for (Player h : MotoServer.getInstance().getServer().getOnlinePlayers()) {
             h.hidePlayer(p);
         }
     }
@@ -281,5 +298,5 @@ public class DebugInterface {
         public boolean a(EntityHuman entityhuman) {
             return true;
         }
-    }*/
+    }
 }

@@ -1,11 +1,29 @@
 package com.mike724.motoserver.debug;
 
+import com.mike724.motoapi.storage.defaults.NetworkPlayer;
+import com.mike724.motoapi.storage.defaults.NetworkRank;
+import com.mike724.motoserver.MotoServer;
+import net.minecraft.server.v1_6_R2.RecipesFurnace;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
-//import com.mike724.networkapi.NetworkRank;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class DebugInterfaceEvents implements Listener {
-    /*
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent e) {
         if (DebugInterfaces.isRottenPotato(e.getCurrentItem())) {
@@ -16,13 +34,13 @@ public class DebugInterfaceEvents implements Listener {
         if (e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
 
-            if (e.getSlot() == 8 && MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+            if (e.getSlot() == 8 && MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
                 p.getInventory().setItem(8, DebugInterfaces.getRottenPotato());
                 e.setCancelled(true);
                 return;
             }
 
-            if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+            if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
                 DebugInterface di = DebugInterfaces.getPlayerInterface(p);
                 if (e.getInventory().getName() == di.getDebugInventory().getName() && e.getRawSlot() < 36) {
                     di.handleClick(e.getRawSlot());
@@ -45,7 +63,7 @@ public class DebugInterfaceEvents implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerOpenInventory(InventoryOpenEvent e) {
-        if (MotoLoader.getNetworkRank(((Player) e.getPlayer()).getName()).equals(NetworkRank.OWNER)) {
+        if (MotoServer.getInstance().getStorage().getObject(((Player) e.getPlayer()).getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterface di = DebugInterfaces.getPlayerInterface((Player) e.getPlayer());
             if (e.getInventory().getName() == di.getDebugInventory().getName() || di.isModEnabled(13)) {
                 e.setCancelled(false);
@@ -57,7 +75,7 @@ public class DebugInterfaceEvents implements Listener {
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-            if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+            if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
                 DebugInterface di = DebugInterfaces.getPlayerInterface(p);
                 if (di.isModEnabled(1)) e.setCancelled(true);
                 else if (di.isModEnabled(2)) e.setDamage(0);
@@ -71,7 +89,7 @@ public class DebugInterfaceEvents implements Listener {
 
         if (DebugInterfaces.isRottenPotato(p.getItemInHand())) {
             DebugInterface di = DebugInterfaces.getPlayerInterface(p);
-            if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+            if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
                 p.openInventory(di.getDebugInventory());
                 p.sendMessage("Opening Rotten Potato!");
                 return;
@@ -82,7 +100,7 @@ public class DebugInterfaceEvents implements Listener {
             }
         }
 
-        if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+        if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterface di = DebugInterfaces.getPlayerInterface(p);
 
             if (e.getAction() == Action.LEFT_CLICK_AIR && di.isModEnabled(4)) {
@@ -116,7 +134,8 @@ public class DebugInterfaceEvents implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+
+        if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterface di = DebugInterfaces.getPlayerInterface(p);
             if (di.isModEnabled(14)) e.setCancelled(false);
         }
@@ -125,7 +144,7 @@ public class DebugInterfaceEvents implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockDamage(BlockDamageEvent e) {
         Player p = e.getPlayer();
-        if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+        if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterface di = DebugInterfaces.getPlayerInterface(p);
             if (di.isModEnabled(14)) e.setCancelled(false);
         }
@@ -153,11 +172,10 @@ public class DebugInterfaceEvents implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        if (MotoLoader.getNetworkRank(p.getName()).equals(NetworkRank.OWNER)) {
+        if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterfaces.createPlayerInterface(p);
             p.getInventory().setItem(8, DebugInterfaces.getRottenPotato());
             p.sendMessage("Your Rotten Potato has been enabled!");
         }
     }
-    */
 }

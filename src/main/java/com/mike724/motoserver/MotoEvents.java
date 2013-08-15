@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.push.MotoPushEvent;
 import com.mike724.motoapi.storage.DataStorage;
+import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.libs.com.google.gson.JsonObject;
@@ -17,13 +18,12 @@ import org.bukkit.event.player.*;
 
 public class MotoEvents implements Listener {
 
+    /** Sets player to online */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent e) {
-        //Set player to online and add them to the networkPlayers list
         String playerName = e.getPlayer().getName();
-        DataStorage ds = MotoServer.getInstance().getDataStorage();
+        Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
-
 
         JSONObject json = mp.apiMethod("isplayeronline", e.getPlayer().getName());
 
@@ -38,15 +38,15 @@ public class MotoEvents implements Listener {
             e.setResult(PlayerLoginEvent.Result.KICK_FULL);
             e.setKickMessage("You are already logged in to another server!");
         } else {
-            //Add the network player object to the pool
-            NetworkPlayer np = (NetworkPlayer) ds.getObject(NetworkPlayer.class, playerName);
-            if(np == null)  np = new NetworkPlayer(playerName);
+            NetworkPlayer np = (NetworkPlayer)storage.getObject(playerName, NetworkPlayer.class);
+            if(np==null) {
+                storage.cacheObject(playerName, new NetworkPlayer(playerName));
+            }
 
             if(np.isBanned()) {
                 e.setResult(PlayerLoginEvent.Result.KICK_BANNED);
                 e.setKickMessage("You are banned from the network!");
             } else {
-                MotoServer.getInstance().addNetworkPlayer(np);
                 mp.cmd("pc", e.getPlayer().getName());
             }
         }
@@ -56,30 +56,25 @@ public class MotoEvents implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e) {
         //Set player to offline and remove them from the networkPlayers list
         String playerName = e.getPlayer().getName();
-        DataStorage ds = MotoServer.getInstance().getDataStorage();
+        Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
         mp.cmd("pd", e.getPlayer().getName());
-
-        NetworkPlayer np = MotoServer.getInstance().getNetworkPlayers().get(playerName);
-        ds.writeObject(np,playerName);
-        MotoServer.getInstance().removeNetworkPlayer(np.getPlayer());
+        //Saves object AND removes from cache (false boolean)
+        storage.saveObject(playerName, NetworkPlayer.class, false);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerQuit(PlayerKickEvent e) {
+    public void onPlayerKicked(PlayerKickEvent e) {
         //Set player to offline and remove them from the networkPlayers list if they are on it
+        //TODO: Do we really need to check if the player is on the list?
+
         String playerName = e.getPlayer().getName();
+        Storage storage = MotoServer.getInstance().getStorage();
+        MotoPush mp = MotoServer.getInstance().getMotoPush();
 
-        if(MotoServer.getInstance().getNetworkPlayers().containsKey(playerName)) {
-            DataStorage ds = MotoServer.getInstance().getDataStorage();
-            NetworkPlayer np = MotoServer.getInstance().getNetworkPlayers().get(playerName);
-            ds.writeObject(np,playerName);
-            MotoServer.getInstance().removeNetworkPlayer(np.getPlayer());
-
-            MotoPush mp = MotoServer.getInstance().getMotoPush();
-            mp.cmd("pd", e.getPlayer().getName());
-        }
+        mp.cmd("pd", e.getPlayer().getName());
+        storage.saveObject(playerName, NetworkPlayer.class, false);
     }
 
 

@@ -2,6 +2,7 @@ package com.mike724.motoserver;
 
 import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.storage.DataStorage;
+import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,12 +15,8 @@ import java.util.HashMap;
 public class MotoServer extends JavaPlugin {
 
     private static MotoServer instance;
-
     private MotoPush motoPush;
-    private DataStorage dataStorage;
-
-    private HashMap<String,NetworkPlayer> networkPlayers = new HashMap<>();
-
+    private Storage storage;
     private String externalIP;
 
 	@Override
@@ -39,12 +36,12 @@ public class MotoServer extends JavaPlugin {
             IOUtils.closeQuietly(is);
         }
 
-        //Setup DataStorage
+        //Setup Storage
         try {
-            dataStorage = new DataStorage("jxBkqvpe0seZhgfavRqB","RXaCcuuQcIUFZuVZik9K","nXWvOgfgRJKBbbzowle1");
+            storage = new Storage("jxBkqvpe0seZhgfavRqB", "RXaCcuuQcIUFZuVZik9K", "nXWvOgfgRJKBbbzowle1");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Couldn't setup DataStorage... stopping");
+            System.out.println("Couldn't setup Storage... stopping");
             this.getServer().shutdown();
         }
 
@@ -79,20 +76,8 @@ public class MotoServer extends JavaPlugin {
         return motoPush;
     }
 
-    public DataStorage getDataStorage() {
-        return dataStorage;
-    }
-
-    protected void addNetworkPlayer(NetworkPlayer np) {
-        networkPlayers.put(np.getPlayer(),np);
-    }
-
-    protected void removeNetworkPlayer(String p) {
-        networkPlayers.remove(p);
-    }
-
-    public HashMap<String,NetworkPlayer> getNetworkPlayers() {
-        return networkPlayers;
+    public Storage getStorage() {
+        return storage;
     }
 
     public String getExternalIP() {

@@ -1,19 +1,5 @@
 package com.mike724.motoserver.debug;
 
-import com.mike724.motoloader.MotoLoader;
-import net.minecraft.server.v1_6_R2.*;
-import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.util.ArrayList;
-
 public class DebugInterface {
     /*private Inventory inv;
 

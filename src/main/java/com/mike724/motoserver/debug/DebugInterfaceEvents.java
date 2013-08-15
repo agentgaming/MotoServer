@@ -1,23 +1,8 @@
 package com.mike724.motoserver.debug;
-import com.mike724.motoloader.MotoLoader;
-//import com.mike724.networkapi.NetworkRank;
-import net.minecraft.server.v1_6_R2.RecipesFurnace;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
+
+//import com.mike724.networkapi.NetworkRank;
 
 public class DebugInterfaceEvents implements Listener {
     /*

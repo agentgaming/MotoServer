@@ -2,25 +2,30 @@ package com.mike724.motoserver;
 
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import com.google.gson.JsonArray;
 import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.push.MotoPushEvent;
-import com.mike724.motoapi.storage.DataStorage;
 import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
-import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.libs.com.google.gson.JsonObject;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class MotoEvents implements Listener {
 
-    /** Sets player to online */
+    //Sets player to online
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent e) {
+        //We aren't connected to MotoPush so we cannot accept new connections
+        if(!MotoServer.getInstance().getMotoPush().isConnected()) {
+            e.setResult(PlayerLoginEvent.Result.KICK_FULL);
+            e.setKickMessage("This server is unable to connect to the network!");
+            return;
+        }
+
         String playerName = e.getPlayer().getName();
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
@@ -59,24 +64,26 @@ public class MotoEvents implements Listener {
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
-        mp.cmd("pd", e.getPlayer().getName());
-        //Saves object AND removes from cache (false boolean)
-        storage.saveObject(playerName, NetworkPlayer.class, false);
+        if(storage.cacheContains(playerName, NetworkPlayer.class)) {
+            mp.cmd("pd", e.getPlayer().getName());
+            //Saves object AND removes from cache (false boolean)
+            storage.saveObject(playerName, NetworkPlayer.class, false);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKicked(PlayerKickEvent e) {
-        //Set player to offline and remove them from the networkPlayers list if they are on it
-        //TODO: Do we really need to check if the player is on the list?
-
+        //Set player to offline and remove them from the networkPlayers list
         String playerName = e.getPlayer().getName();
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
-        mp.cmd("pd", e.getPlayer().getName());
-        storage.saveObject(playerName, NetworkPlayer.class, false);
+        if(storage.cacheContains(playerName, NetworkPlayer.class)) {
+            mp.cmd("pd", e.getPlayer().getName());
+            //Saves object AND removes from cache (false boolean)
+            storage.saveObject(playerName, NetworkPlayer.class, false);
+        }
     }
-
 
     //Parse network events
     @EventHandler(priority = EventPriority.MONITOR)

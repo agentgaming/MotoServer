@@ -1,16 +1,13 @@
 package com.mike724.motoserver;
 
 import com.mike724.motoapi.push.MotoPush;
-import com.mike724.motoapi.storage.DataStorage;
 import com.mike724.motoapi.storage.Storage;
-import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
 
 public class MotoServer extends JavaPlugin {
 

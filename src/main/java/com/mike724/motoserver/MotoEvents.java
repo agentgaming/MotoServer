@@ -32,7 +32,7 @@ public class MotoEvents implements Listener {
 
         JSONObject json = mp.apiMethod("isplayeronline", e.getPlayer().getName());
 
-        Boolean isOnline = false;
+        Boolean isOnline;
         try {
             isOnline = json.getBoolean("isOnline");
         } catch (JSONException e1) {
@@ -101,7 +101,7 @@ public class MotoEvents implements Listener {
 
     private void kick(MotoPushEvent e) {
         String name = e.getPushData().getData().get("name");
-        if (name == null || name == "") return;
+        if (name == null || name.equals("")) return;
 
         Player p = MotoServer.getInstance().getServer().getPlayerExact(name);
         if (p != null) {

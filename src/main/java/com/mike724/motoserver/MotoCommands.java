@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 public class MotoCommands implements CommandExecutor {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private MotoServer plugin;
 
     public MotoCommands(MotoServer plugin) {

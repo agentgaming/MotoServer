@@ -3,6 +3,7 @@ package com.mike724.motoserver;
 import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.storage.Storage;
 import org.apache.commons.io.IOUtils;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -54,8 +55,11 @@ public class MotoServer extends JavaPlugin {
         //Setup the event listener
         getServer().getPluginManager().registerEvents(new MotoEvents(), this);
 
-        //Setup the network command listener
+        //Setup the command listeners
         getCommand("net").setExecutor(new MotoCommands(this));
+        getCommand("addfriend").setExecutor(new MotoCommands(this));
+        getCommand("delfriend").setExecutor(new MotoCommands(this));
+        getCommand("setrank").setExecutor(new MotoCommands(this));
 
         this.getLogger().info("MotoServer Enabled");
     }
@@ -79,6 +83,12 @@ public class MotoServer extends JavaPlugin {
 
     public String getExternalIP() {
         return externalIP;
+    }
+
+    public Boolean isPlayerOnServer(String name) {
+        for(Player p : this.getServer().getOnlinePlayers())
+            if(p.getName().equalsIgnoreCase(name)) return true;
+        return false;
     }
 
     public static MotoServer getInstance() {

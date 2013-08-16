@@ -6,3 +6,12 @@ commands:
    net:
       description: This is a network command.
       usage: /net [args...]
+   addfriend:
+      description: Add a friend your friends list.
+      usage: /addfriend <name>
+   delfriend:
+      description: Delete a friend from your friends list.
+      usage: /delfriend <name>
+   setrank:
+      description: Set a players rank on the network.
+      usage: /setrank <name> <rank>

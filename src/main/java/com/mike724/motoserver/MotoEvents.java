@@ -59,7 +59,7 @@ public class MotoEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent e) {
         //Set player to offline and remove them from the networkPlayers list
         String playerName = e.getPlayer().getName();
@@ -73,8 +73,14 @@ public class MotoEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerKicked(PlayerKickEvent e) {
+        //The player isn't going to be kicked, ignore it
+        if(e.isCancelled()) {
+            return;
+        }
+        MotoServer.getInstance().getLogger().info("Kick event called");
+
         //Set player to offline and remove them from the networkPlayers list
         String playerName = e.getPlayer().getName();
         Storage storage = MotoServer.getInstance().getStorage();
@@ -82,6 +88,7 @@ public class MotoEvents implements Listener {
 
         //TODO: Replace this cacheContains if statement to a use a "better" boolean expression
         if (storage.cacheContains(playerName, NetworkPlayer.class)) {
+            MotoServer.getInstance().getLogger().info("Kick event boolean expression returned true");
             mp.cmd("pd", e.getPlayer().getName());
             storage.saveAllObjectsForPlayer(playerName, false);
         }

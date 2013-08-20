@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+@SuppressWarnings("unused")
 public class MotoEvents implements Listener {
 
     //Sets player to online
@@ -43,9 +44,10 @@ public class MotoEvents implements Listener {
             e.setResult(PlayerLoginEvent.Result.KICK_FULL);
             e.setKickMessage("You are already logged in to another server!");
         } else {
-            NetworkPlayer np = (NetworkPlayer) storage.getObject(playerName, NetworkPlayer.class);
+            NetworkPlayer np = storage.getObject(playerName, NetworkPlayer.class);
             if (np == null) {
                 storage.cacheObject(playerName, new NetworkPlayer(playerName));
+                np = storage.getObject(playerName, NetworkPlayer.class);
             }
 
             if (np.isBanned()) {
@@ -64,10 +66,10 @@ public class MotoEvents implements Listener {
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
+        //TODO: Replace this cacheContains if statement to a use a "better" boolean expression
         if (storage.cacheContains(playerName, NetworkPlayer.class)) {
             mp.cmd("pd", e.getPlayer().getName());
-            //Saves object AND removes from cache (false boolean)
-            storage.saveObject(playerName, NetworkPlayer.class, false);
+            storage.saveAllObjectsForPlayer(playerName, false);
         }
     }
 
@@ -78,10 +80,10 @@ public class MotoEvents implements Listener {
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
+        //TODO: Replace this cacheContains if statement to a use a "better" boolean expression
         if (storage.cacheContains(playerName, NetworkPlayer.class)) {
             mp.cmd("pd", e.getPlayer().getName());
-            //Saves object AND removes from cache (false boolean)
-            storage.saveObject(playerName, NetworkPlayer.class, false);
+            storage.saveAllObjectsForPlayer(playerName, false);
         }
     }
 

@@ -69,6 +69,9 @@ public class MotoServer extends JavaPlugin {
         //Uh, oh
         this.getLogger().info("MotoServer Disabled");
 
+        //Quick, save all of the dataz!1!1!!111
+        storage.saveAllObjects(false);
+
         //If we go down, the server does too!!
         this.getServer().shutdown();
     }
@@ -81,6 +84,7 @@ public class MotoServer extends JavaPlugin {
         return storage;
     }
 
+    @SuppressWarnings("unused")
     public String getExternalIP() {
         return externalIP;
     }

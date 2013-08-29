@@ -85,6 +85,7 @@ public class DebugInterfaceEvents implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent e) {
+        if(e.getAction() == Action.PHYSICAL) return;
         Player p = e.getPlayer();
 
         if (DebugInterfaces.isRottenPotato(p.getItemInHand())) {

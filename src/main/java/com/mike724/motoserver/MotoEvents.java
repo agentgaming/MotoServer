@@ -101,12 +101,7 @@ public class MotoEvents implements Listener {
 
         switch (e.getPushData().getCommand()) {
             case "kick":
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(MotoServer.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-                        kick(e);
-                    }
-                });
+                kick(e);
                 break;
             default:
                 break;

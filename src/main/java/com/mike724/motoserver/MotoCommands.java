@@ -24,7 +24,7 @@ public class MotoCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if(sender instanceof BlockCommandSender) {
+        if(!(sender instanceof Player)) {
             if(cmd.getName().equalsIgnoreCase("cmdauth")) {
                 if(args.length < 3) return false;
 
@@ -43,9 +43,9 @@ public class MotoCommands implements CommandExecutor {
 
                 return true;
             }
+            return false;
         }
 
-        if (!(sender instanceof Player)) return false;
         Player p = (Player) sender;
         NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(p.getName(),NetworkPlayer.class);
 

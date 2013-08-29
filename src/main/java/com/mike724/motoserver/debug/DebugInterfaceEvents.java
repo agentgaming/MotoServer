@@ -24,7 +24,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class DebugInterfaceEvents implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryClick(InventoryClickEvent e) {
         if (DebugInterfaces.isRottenPotato(e.getCurrentItem())) {
             e.setCancelled(true);
@@ -61,7 +61,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerOpenInventory(InventoryOpenEvent e) {
         if (MotoServer.getInstance().getStorage().getObject(((Player) e.getPlayer()).getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterface di = DebugInterfaces.getPlayerInterface((Player) e.getPlayer());
@@ -71,7 +71,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
@@ -83,7 +83,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
 
@@ -131,7 +131,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
 
@@ -141,7 +141,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockDamage(BlockDamageEvent e) {
         Player p = e.getPlayer();
         if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
@@ -150,7 +150,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         if (DebugInterfaces.isRottenPotato(e.getItemDrop().getItemStack())) {
@@ -158,7 +158,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         for (ItemStack i : e.getDrops()) {
@@ -168,7 +168,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 

@@ -2,6 +2,7 @@ package com.mike724.motoserver;
 
 import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.storage.Storage;
+import com.mike724.motoserver.debug.DebugInterfaceEvents;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,6 +61,9 @@ public class MotoServer extends JavaPlugin {
         getCommand("addfriend").setExecutor(new MotoCommands(this));
         getCommand("delfriend").setExecutor(new MotoCommands(this));
         getCommand("setrank").setExecutor(new MotoCommands(this));
+
+        //Setup Debug Interface
+        getServer().getPluginManager().registerEvents(new DebugInterfaceEvents(), this);
 
         this.getLogger().info("MotoServer Enabled");
     }

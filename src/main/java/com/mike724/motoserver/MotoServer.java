@@ -61,6 +61,7 @@ public class MotoServer extends JavaPlugin {
         getCommand("addfriend").setExecutor(new MotoCommands(this));
         getCommand("delfriend").setExecutor(new MotoCommands(this));
         getCommand("setrank").setExecutor(new MotoCommands(this));
+        getCommand("cmdauth").setExecutor(new MotoCommands(this));
 
         //Setup Debug Interface
         getServer().getPluginManager().registerEvents(new DebugInterfaceEvents(), this);

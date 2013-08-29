@@ -3,7 +3,9 @@ package com.mike724.motoserver;
 import com.mike724.motoapi.push.MotoPushData;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import com.mike724.motoapi.storage.defaults.NetworkRank;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,6 +24,27 @@ public class MotoCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if(sender instanceof BlockCommandSender) {
+            if(cmd.getName().equalsIgnoreCase("cmdauth")) {
+                if(args.length < 3) return false;
+
+                String player = args[0];
+                Integer perms = Integer.parseInt(args[1]);
+                String command = "";
+
+                for(int i = 2; i < args.length; i++) {
+                    command += args[i];
+                }
+
+                NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(player, NetworkPlayer.class);
+                if(np.getRank().getPermission() >= perms) {
+                    Bukkit.dispatchCommand(sender, command);
+                }
+
+                return true;
+            }
+        }
+
         if (!(sender instanceof Player)) return false;
         Player p = (Player) sender;
         NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(p.getName(),NetworkPlayer.class);

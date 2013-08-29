@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -134,6 +135,16 @@ public class DebugInterfaceEvents implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+
+        if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
+            DebugInterface di = DebugInterfaces.getPlayerInterface(p);
+            if (di.isModEnabled(14)) e.setCancelled(false);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
 
         if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {

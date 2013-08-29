@@ -33,13 +33,12 @@ public class MotoCommands implements CommandExecutor {
                 String command = "";
 
                 for(int i = 2; i < args.length; i++) {
-                    command += args[i];
+                    command += args[i] + (i == args.length - 1 ? "" : " ");
                 }
 
                 NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(player, NetworkPlayer.class);
                 if(np.getRank().getPermission() >= perms) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-                    Bukkit.getLogger().info("cmdauth ran '" +  command +"'");
+                    Bukkit.dispatchCommand(sender, command);
                 }
 
                 return true;

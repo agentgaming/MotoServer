@@ -38,7 +38,8 @@ public class MotoCommands implements CommandExecutor {
 
                 NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(player, NetworkPlayer.class);
                 if(np.getRank().getPermission() >= perms) {
-                    Bukkit.dispatchCommand(sender, command);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                    Bukkit.getLogger().info("cmdauth ran '" +  command +"'");
                 }
 
                 return true;

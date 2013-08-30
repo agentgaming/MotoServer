@@ -1,9 +1,11 @@
 package com.mike724.motoserver;
 
+import com.mike724.motoapi.portals.PortalManager;
 import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.storage.Storage;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ public class MotoServer extends JavaPlugin {
     private MotoPush motoPush;
     private Storage storage;
     private String externalIP;
+    private PortalManager portalManager;
 
     @Override
     public void onEnable() {
@@ -52,8 +55,14 @@ public class MotoServer extends JavaPlugin {
             this.getServer().shutdown();
         }
 
+        PluginManager pm = this.getServer().getPluginManager();
+
         //Setup the event listener
-        getServer().getPluginManager().registerEvents(new MotoEvents(), this);
+        pm.registerEvents(new MotoEvents(), this);
+
+        //Setup portals
+        portalManager = new PortalManager();
+        pm.registerEvents(portalManager, this);
 
         //Setup the command listeners
         getCommand("net").setExecutor(new MotoCommands(this));
@@ -82,6 +91,11 @@ public class MotoServer extends JavaPlugin {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    @SuppressWarnings("unused")
+    public PortalManager getPortalManager() {
+        return portalManager;
     }
 
     @SuppressWarnings("unused")

@@ -6,6 +6,7 @@ import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.push.MotoPushEvent;
 import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -96,7 +97,7 @@ public class MotoEvents implements Listener {
 
     //Parse network events
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onMotoPush(MotoPushEvent e) {
+    public void onMotoPush(final MotoPushEvent e) {
 
         switch (e.getPushData().getCommand()) {
             case "kick":

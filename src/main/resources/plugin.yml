@@ -15,3 +15,6 @@ commands:
    setrank:
       description: Set a players rank on the network.
       usage: /setrank <name> <rank>
+   cmdauth:
+      description: Runs a command if the player has the desired auth
+      usage: /cmdauth <player> <perms> <command>

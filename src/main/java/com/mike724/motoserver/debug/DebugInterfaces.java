@@ -52,7 +52,7 @@ public class DebugInterfaces {
     }
 
     public static boolean isRottenPotato(ItemStack i) {
-        return i != null && i.getTypeId() == 394 && i.getItemMeta().getDisplayName().equals(potatoName);
+        return i != null && i.getTypeId() == 394 && i.getItemMeta() != null && i.getItemMeta().getDisplayName() != null && i.getItemMeta().getDisplayName().equals(potatoName);
     }
 
     public static boolean isDebugging(Player p) {

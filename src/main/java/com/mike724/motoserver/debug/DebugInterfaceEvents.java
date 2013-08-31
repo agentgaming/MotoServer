@@ -24,6 +24,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Iterator;
+
 public class DebugInterfaceEvents implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryClick(InventoryClickEvent e) {
@@ -173,9 +175,9 @@ public class DebugInterfaceEvents implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        for (ItemStack i : e.getDrops()) {
-            if (DebugInterfaces.isRottenPotato(i)) {
-                e.getDrops().remove(i);
+        for(Iterator<ItemStack> i = e.getDrops().iterator(); i.hasNext();) {
+            if (DebugInterfaces.isRottenPotato(i.next())) {
+                i.remove();
             }
         }
     }

@@ -34,9 +34,11 @@ public class MotoEvents implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String playerName = event.getPlayer().getName();
         String playerDispName = event.getPlayer().getDisplayName();
+
         //np should never be null because we cache it in onPlayerLogin no matter what
         NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(playerName, NetworkPlayer.class);
         NetworkRank rank = np.getRank();
+
         //yellow is just a default, used if the rank is not accounted for yet
         ChatColor baseColor = ChatColor.YELLOW;
         switch (rank) {
@@ -48,6 +50,7 @@ public class MotoEvents implements Listener {
                 break;
             case MOD:
                 baseColor = ChatColor.GREEN;
+                break;
             case BUILDER:
                 baseColor = ChatColor.WHITE;
                 break;

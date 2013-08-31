@@ -15,6 +15,10 @@
             <id>AGNRepo</id>
             <url>https://mike724.com/repo/content/repositories/agentgaming-release/</url>
         </repository>
+        <repository>
+            <id>Kitteh</id>
+            <url>http://repo.kitteh.org/content/repositories/public/</url>
+        </repository>
     </repositories>
     <build>
         <extensions>
@@ -64,6 +68,13 @@
             <version>(1.0,]</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kitteh</groupId>
+            <artifactId>tagapi</artifactId>
+            <version>LATEST</version>
+            <type>jar</type>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <distributionManagement>

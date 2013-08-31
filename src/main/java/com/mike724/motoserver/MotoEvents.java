@@ -6,17 +6,44 @@ import com.mike724.motoapi.push.MotoPush;
 import com.mike724.motoapi.push.MotoPushEvent;
 import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
+import com.mike724.motoapi.storage.defaults.NetworkRank;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 @SuppressWarnings("unused")
 public class MotoEvents implements Listener {
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        String playerName = event.getPlayer().getName();
+        String playerDispName = event.getPlayer().getDisplayName();
+        //np should never be null because we cache it in onPlayerLogin no matter what
+        NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(playerName, NetworkPlayer.class);
+        //yellow is just a default, used if the rank is not accounted for yet
+        ChatColor baseColor = ChatColor.YELLOW;
+        switch(np.getRank()) {
+            case OWNER:
+                baseColor = ChatColor.DARK_PURPLE;
+                break;
+            case ADMIN:
+                baseColor = ChatColor.DARK_PURPLE;
+                break;
+            case MOD:
+                baseColor = ChatColor.GREEN;
+            case BUILDER:
+                baseColor = ChatColor.WHITE;
+                break;
+            case USER:
+                baseColor = ChatColor.GRAY;
+                break;
+        }
+        event.setFormat(baseColor+np.getRank().name()+" %s: %s");
+    }
 
     //Sets player to online
     @EventHandler(priority = EventPriority.HIGHEST)

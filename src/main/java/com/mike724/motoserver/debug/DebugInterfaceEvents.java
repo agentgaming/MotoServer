@@ -4,6 +4,7 @@ import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import com.mike724.motoapi.storage.defaults.NetworkRank;
 import com.mike724.motoserver.MotoServer;
 import net.minecraft.server.v1_6_R2.RecipesFurnace;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -95,10 +96,9 @@ public class DebugInterfaceEvents implements Listener {
             DebugInterface di = DebugInterfaces.getPlayerInterface(p);
             if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
                 p.openInventory(di.getDebugInventory());
-                p.sendMessage("Opening Rotten Potato!");
                 return;
             } else {
-                p.sendMessage("Nothing interesting happens...");
+                p.sendMessage(ChatColor.YELLOW + "Nothing interesting happens...");
                 p.getInventory().remove(p.getItemInHand());
                 return;
             }
@@ -189,7 +189,7 @@ public class DebugInterfaceEvents implements Listener {
         if (MotoServer.getInstance().getStorage().getObject(p.getName(), NetworkPlayer.class).getRank().equals(NetworkRank.OWNER)) {
             DebugInterfaces.createPlayerInterface(p);
             p.getInventory().setItem(8, DebugInterfaces.getRottenPotato());
-            p.sendMessage("Your Rotten Potato has been enabled!");
+            p.sendMessage(ChatColor.YELLOW + "Your Rotten Potato has been enabled!");
         }
     }
 }

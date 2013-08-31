@@ -69,9 +69,11 @@ public class MotoEvents implements Listener {
 
         //TODO: Replace this cacheContains if statement to a use a "better" boolean expression
         if (storage.cacheContains(playerName, NetworkPlayer.class)) {
-            mp.cmd("pd", e.getPlayer().getName());
             storage.saveAllObjectsForPlayer(playerName, false);
         }
+
+        //Run this command no matter what in order to avoid undesired already logged in
+        mp.cmd("pd", e.getPlayer().getName());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -90,9 +92,11 @@ public class MotoEvents implements Listener {
         //TODO: Replace this cacheContains if statement to a use a "better" boolean expression
         if (storage.cacheContains(playerName, NetworkPlayer.class)) {
             MotoServer.getInstance().getLogger().info("Kick event boolean expression returned true");
-            mp.cmd("pd", e.getPlayer().getName());
             storage.saveAllObjectsForPlayer(playerName, false);
         }
+
+        //Run this command no matter what in order to avoid undesired already logged in
+        mp.cmd("pd", e.getPlayer().getName());
     }
 
     //Parse network events

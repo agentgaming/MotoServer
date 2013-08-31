@@ -170,7 +170,7 @@ public class DebugInterfaceEvents implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         for (ItemStack i : e.getDrops()) {

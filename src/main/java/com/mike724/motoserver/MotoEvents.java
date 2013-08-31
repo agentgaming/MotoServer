@@ -7,13 +7,15 @@ import com.mike724.motoapi.push.MotoPushEvent;
 import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import com.mike724.motoapi.storage.defaults.NetworkRank;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.kitteh.tag.PlayerReceiveNameTagEvent;
 
 @SuppressWarnings("unused")
@@ -23,8 +25,8 @@ public class MotoEvents implements Listener {
     public void onNameTag(PlayerReceiveNameTagEvent event) {
         String dispName = event.getNamedPlayer().getDisplayName();
         NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(event.getNamedPlayer().getName(), NetworkPlayer.class);
-        if(np.getRank() == NetworkRank.OWNER) {
-            event.setTag(ChatColor.GOLD+dispName);
+        if (np.getRank() == NetworkRank.OWNER) {
+            event.setTag(ChatColor.GOLD + dispName);
         }
     }
 
@@ -34,9 +36,10 @@ public class MotoEvents implements Listener {
         String playerDispName = event.getPlayer().getDisplayName();
         //np should never be null because we cache it in onPlayerLogin no matter what
         NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(playerName, NetworkPlayer.class);
+        NetworkRank rank = np.getRank();
         //yellow is just a default, used if the rank is not accounted for yet
         ChatColor baseColor = ChatColor.YELLOW;
-        switch(np.getRank()) {
+        switch (rank) {
             case OWNER:
                 baseColor = ChatColor.GOLD;
                 break;
@@ -52,7 +55,10 @@ public class MotoEvents implements Listener {
                 baseColor = ChatColor.GRAY;
                 break;
         }
-        event.setFormat(baseColor+np.getRank().name()+" %s: %s");
+
+        String formattedRank = rank.name().toLowerCase();
+        formattedRank = Character.toUpperCase(formattedRank.charAt(0)) + formattedRank.substring(1);
+        event.setFormat(baseColor + "[" + formattedRank + "] %s: %s");
     }
 
     //Sets player to online
@@ -116,7 +122,7 @@ public class MotoEvents implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerKicked(PlayerKickEvent e) {
         //The player isn't going to be kicked, ignore it
-        if(e.isCancelled()) {
+        if (e.isCancelled()) {
             return;
         }
         MotoServer.getInstance().getLogger().info("Kick event called");

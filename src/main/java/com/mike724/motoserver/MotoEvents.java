@@ -14,9 +14,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
+import org.kitteh.tag.PlayerReceiveNameTagEvent;
 
 @SuppressWarnings("unused")
 public class MotoEvents implements Listener {
+
+    @EventHandler
+    public void onNameTag(PlayerReceiveNameTagEvent event) {
+        String dispName = event.getPlayer().getDisplayName();
+        NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(event.getPlayer().getName(), NetworkPlayer.class);
+        if(np.getRank() == NetworkRank.OWNER) {
+            event.setTag(ChatColor.GOLD+dispName);
+        }
+    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
@@ -28,10 +38,10 @@ public class MotoEvents implements Listener {
         ChatColor baseColor = ChatColor.YELLOW;
         switch(np.getRank()) {
             case OWNER:
-                baseColor = ChatColor.DARK_PURPLE;
+                baseColor = ChatColor.GOLD;
                 break;
             case ADMIN:
-                baseColor = ChatColor.DARK_PURPLE;
+                baseColor = ChatColor.BLUE;
                 break;
             case MOD:
                 baseColor = ChatColor.GREEN;

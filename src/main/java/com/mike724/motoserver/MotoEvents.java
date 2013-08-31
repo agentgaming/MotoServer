@@ -21,8 +21,8 @@ public class MotoEvents implements Listener {
 
     @EventHandler
     public void onNameTag(PlayerReceiveNameTagEvent event) {
-        String dispName = event.getPlayer().getDisplayName();
-        NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(event.getPlayer().getName(), NetworkPlayer.class);
+        String dispName = event.getNamedPlayer().getDisplayName();
+        NetworkPlayer np = MotoServer.getInstance().getStorage().getObject(event.getNamedPlayer().getName(), NetworkPlayer.class);
         if(np.getRank() == NetworkRank.OWNER) {
             event.setTag(ChatColor.GOLD+dispName);
         }

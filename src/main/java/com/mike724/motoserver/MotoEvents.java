@@ -84,6 +84,7 @@ public class MotoEvents implements Listener {
         try {
             isOnline = json.getBoolean("isOnline");
         } catch (JSONException e1) {
+            e1.printStackTrace();
             isOnline = false;
         }
 
@@ -137,7 +138,6 @@ public class MotoEvents implements Listener {
 
         //TODO: Replace this cacheContains if statement to a use a "better" boolean expression
         if (storage.cacheContains(playerName, NetworkPlayer.class)) {
-            MotoServer.getInstance().getLogger().info("Kick event boolean expression returned true");
             storage.saveAllObjectsForPlayer(playerName, false);
         }
 
@@ -148,7 +148,6 @@ public class MotoEvents implements Listener {
     //Parse network events
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMotoPush(final MotoPushEvent e) {
-
         switch (e.getPushData().getCommand()) {
             case "kick":
                 kick(e);

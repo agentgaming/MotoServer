@@ -88,7 +88,7 @@ public class MotoCommands implements CommandExecutor {
                     String ranksList = "";
                     for (NetworkRank nr : NetworkRank.values()) {
                         ranksList += nr.name() + ", ";
-                        if (nr.name().equalsIgnoreCase(args[1])) {
+                        if (nr.name().equalsIgnoreCase(args[1].toUpperCase())) {
                             rank = nr;
                         }
                     }
@@ -99,7 +99,7 @@ public class MotoCommands implements CommandExecutor {
                         NetworkPlayer target = MotoServer.getInstance().getStorage().getObject(args[0], NetworkPlayer.class);
                         target.setRank(NetworkRank.valueOf(args[1]));
 
-                        MotoServer.getInstance().updateNetworkPlayer(p.getName(), np);
+                        MotoServer.getInstance().updateNetworkPlayer(args[0], target);
                         if (!MotoServer.getInstance().isPlayerOnServer(args[0]))
                             MotoServer.getInstance().getStorage().removeFromCache(args[0], NetworkPlayer.class);
 

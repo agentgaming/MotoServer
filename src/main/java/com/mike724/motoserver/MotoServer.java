@@ -2,7 +2,9 @@ package com.mike724.motoserver;
 
 import com.mike724.motoapi.portals.PortalManager;
 import com.mike724.motoapi.push.MotoPush;
+import com.mike724.motoapi.push.MotoPushData;
 import com.mike724.motoapi.storage.Storage;
+import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import com.mike724.motoserver.debug.DebugInterfaceEvents;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.entity.Player;
@@ -112,6 +114,14 @@ public class MotoServer extends JavaPlugin {
         for (Player p : this.getServer().getOnlinePlayers())
             if (p.getName().equalsIgnoreCase(name)) return true;
         return false;
+    }
+
+    public void updateNetworkPlayer(String p, NetworkPlayer np) {
+        storage.cacheObject(p, np);
+        storage.saveObject(p, NetworkPlayer.class, false);
+        MotoPushData mpd = new MotoPushData("npupdate");
+        mpd.addData("name", p);
+        motoPush.push(mpd);
     }
 
     public static MotoServer getInstance() {

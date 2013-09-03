@@ -159,6 +159,12 @@ public class MotoEvents implements Listener {
             case "kick":
                 kick(e);
                 break;
+            case "npupdate":
+                Storage storage = MotoServer.getInstance().getStorage();
+                String name = e.getPushData().getData().get("name");
+                if (storage.cacheContains(name, NetworkPlayer.class)) {
+                    storage.removeFromCache(name, NetworkPlayer.class);
+                }
             default:
                 break;
         }

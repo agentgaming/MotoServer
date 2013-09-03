@@ -78,7 +78,12 @@ public class MotoEvents implements Listener {
         Storage storage = MotoServer.getInstance().getStorage();
         MotoPush mp = MotoServer.getInstance().getMotoPush();
 
-        JSONObject json = mp.apiMethod("isplayeronline", e.getPlayer().getName());
+        JSONObject json = null;
+        try {
+            json = new JSONObject(mp.apiMethod("isplayeronline", e.getPlayer().getName()));
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
 
         Boolean isOnline;
         try {
@@ -92,6 +97,8 @@ public class MotoEvents implements Listener {
             e.setResult(PlayerLoginEvent.Result.KICK_FULL);
             e.setKickMessage("You are already logged in to another server!");
         } else {
+            if (storage.cacheContains(playerName, NetworkPlayer.class))
+                storage.removeFromCache(playerName, NetworkPlayer.class);
             NetworkPlayer np = storage.getObject(playerName, NetworkPlayer.class);
             if (np == null) {
                 storage.cacheObject(playerName, new NetworkPlayer(playerName));

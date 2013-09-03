@@ -6,6 +6,7 @@ import net.minecraft.server.v1_6_R2.EntityHuman;
 import net.minecraft.server.v1_6_R2.EntityPlayer;
 import net.minecraft.server.v1_6_R2.Packet100OpenWindow;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -27,19 +28,23 @@ public class DebugInterface {
 
     private Boolean[] canEnable = {true, true, true, true, true, true, false, false, false, true, false, false, false, true, true, false};
 
-    private Integer[] blocks = {288, 7, 49, 399, 368, 33, 384, 353, 276, 119, 393, 339, 335, 54, 46, 264};
+    private Integer[] blocks = {288, 7, 49, 399, 368, 33, 384, 353, 276, 119, 393, 339, 335, 54, 46, 264, 92};
 
-    private String[] mods = {"Fly", "God", "Demigod", "Super Move", "Tele-click", "Global Debug", "Give 10 levels", "Speed", "Strength", "Vanish", "Feed", "Heal", "Clear Effects", "Inventory Override", "Block Place/Break Override", "Op Me!"};
+    private String[] mods = {"Fly", "God", "Demigod", "Super Move", "Tele-click", "Global Debug", "Give 10 levels", "Speed", "Strength", "Vanish", "Feed", "Heal", "Clear Effects", "Inventory Override", "Block Place/Break Override", "Op Me!", "Change Gamemode"};
 
     private String[] desc = {"Allows you to fly", "Makes you invincible, doesn't show hits", "Makes you invincible, shows hits"
             , "Allows you to move in any direction quickly", "Teleport where you click", "Enables debug options for other network plugins",
             "Gain 10 levels of experience", "Gives you speed effect", "Gives you Strength Effect", "Makes you completely invisible",
-            "Replenishes your Hunger", "Heals your health", "Clears any potion effects on you", "Allows you to open any inventory", "Allows you to break/place any block", "Ops you on the current server"};
+            "Replenishes your Hunger", "Heals your health", "Clears any potion effects on you", "Allows you to open any inventory", "Allows you to break/place any block",
+            "Ops you on the current server", "Change your gamemode to the next one"};
 
     public DebugInterface(Player p) {
         this.p = p;
         this.enabledMods = new ArrayList<String>();
         inv = MotoServer.getInstance().getServer().createInventory(p, 36, "Rotten Potato - " + p.getName());
+
+        GameMode gm = getNextGameMode(p);
+        desc[16] = gm.name().toLowerCase().substring(0, 1).toUpperCase() + gm.name().toLowerCase().substring(1) + " Mode";
 
         //Add all the base mods
         for (int i = 0; i < mods.length; i++) {
@@ -203,6 +208,12 @@ public class DebugInterface {
             case 15:
                 p.setOp(true);
                 break;
+            case 16:
+                GameMode gm = getNextGameMode(p);
+                p.setGameMode(gm);
+                gm = getNextGameMode(p);
+                desc[16] = gm.name().toLowerCase().substring(0, 1).toUpperCase() + gm.name().toLowerCase().substring(1) + " Mode";
+                break;
             //Handle player spoofing
             case 27:
                 break;
@@ -277,6 +288,13 @@ public class DebugInterface {
             if (isModEnabled(3) && p.isSneaking()) p.setVelocity(p.getLocation().getDirection().multiply(5));
         }
     };
+
+    private GameMode getNextGameMode(Player p) {
+        int m = p.getGameMode().getValue();
+        m++;
+        if (m > 2) m = 0;
+        return GameMode.getByValue(m);
+    }
 
     //TODO: VERSION DEPENDENT; Anvil
     private void openAnvil() {

@@ -16,11 +16,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.kitteh.tag.PlayerReceiveNameTagEvent;
 
 @SuppressWarnings("unused")
-public class MotoEvents implements Listener, PluginMessageListener {
+public class MotoEvents implements Listener {
 
     @EventHandler
     public void onNameTag(PlayerReceiveNameTagEvent event) {

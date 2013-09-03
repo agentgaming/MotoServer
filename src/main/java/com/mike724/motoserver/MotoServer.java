@@ -59,7 +59,12 @@ public class MotoServer extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
 
         //Setup the event listener
-        pm.registerEvents(new MotoEvents(), this);
+        MotoEvents me = new MotoEvents();
+        pm.registerEvents(me, this);
+
+        //Register Bungeecord listener
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", me);
+
 
         //Setup portals
         portalManager = new PortalManager();
@@ -109,8 +114,8 @@ public class MotoServer extends JavaPlugin {
     }
 
     public Boolean isPlayerOnServer(String name) {
-        for(Player p : this.getServer().getOnlinePlayers())
-            if(p.getName().equalsIgnoreCase(name)) return true;
+        for (Player p : this.getServer().getOnlinePlayers())
+            if (p.getName().equalsIgnoreCase(name)) return true;
         return false;
     }
 

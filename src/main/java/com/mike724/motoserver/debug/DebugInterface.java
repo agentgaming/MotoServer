@@ -212,7 +212,8 @@ public class DebugInterface {
                 GameMode gm = getNextGameMode(p);
                 p.setGameMode(gm);
                 gm = getNextGameMode(p);
-                desc[16] = gm.name().toLowerCase().substring(0, 1).toUpperCase() + gm.name().toLowerCase().substring(1) + " Mode";
+                String desc = gm.name().toLowerCase().substring(0, 1).toUpperCase() + gm.name().toLowerCase().substring(1) + " Mode";
+                inv.setItem(16, menuItem(blocks[16], mods[16], desc, canEnable(16)));
                 break;
             //Handle player spoofing
             case 27:

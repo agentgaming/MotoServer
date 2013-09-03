@@ -59,12 +59,7 @@ public class MotoServer extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
 
         //Setup the event listener
-        MotoEvents me = new MotoEvents();
-        pm.registerEvents(me, this);
-
-        //Register Bungeecord listener
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", me);
-
+        pm.registerEvents(new MotoEvents(), this);
 
         //Setup portals
         portalManager = new PortalManager();

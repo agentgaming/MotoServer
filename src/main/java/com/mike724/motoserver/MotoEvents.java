@@ -19,10 +19,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.kitteh.tag.PlayerReceiveNameTagEvent;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-
 @SuppressWarnings("unused")
 public class MotoEvents implements Listener, PluginMessageListener {
 
@@ -133,22 +129,6 @@ public class MotoEvents implements Listener, PluginMessageListener {
 
         //Run this command no matter what in order to avoid undesired already logged in
         mp.cmd("pd", e.getPlayer().getName());
-    }
-
-    @Override
-    public void onPluginMessageReceived(String s, Player p, byte[] bytes) {
-        if (!s.equals("BungeeCord")) return;
-        DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes));
-        String subchannel = null;
-        try {
-            subchannel = in.readUTF();
-        } catch (IOException e) {
-            return;
-        }
-
-        if (subchannel.equals("Connect")) {
-            MotoServer.getInstance().getMotoPush().cmd("pd", p.getName());
-        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

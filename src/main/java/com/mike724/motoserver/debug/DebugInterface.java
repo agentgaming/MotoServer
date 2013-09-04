@@ -26,7 +26,7 @@ public class DebugInterface {
     private ArrayList<String> enabledMods;
     private Player p;
 
-    private Boolean[] canEnable = {true, true, true, true, true, true, false, false, false, true, false, false, false, true, true, false};
+    private Boolean[] canEnable = {true, true, true, true, true, true, false, false, false, true, false, false, false, true, true, false, false};
 
     private Integer[] blocks = {288, 7, 49, 399, 368, 33, 384, 353, 276, 119, 393, 339, 335, 54, 46, 264, 92};
 
@@ -65,7 +65,6 @@ public class DebugInterface {
         inv.setItem(31, menuItem(61, "Insta-cook", "Anything you click will be cooked", true));
         inv.setItem(32, menuItem(130, "Ender Chest", "Open your ender chest", false));
         inv.setItem(33, menuItem(116, "Enchant", "Open an enchantment table", false));
-        inv.setItem(34, menuItem(145, "Anvil", "Open an anvil", false));
         inv.setItem(34, menuItem(145, "Anvil", "Open an anvil", false));
         inv.setItem(35, menuItem(58, "Workbench", "Open a workbench", false));
 

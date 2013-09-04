@@ -172,7 +172,7 @@ public class DebugInterface {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 6000, 2));
                 break;
             case 8:
-                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 6000, 2));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 6000, 1));
                 break;
             case 9:
                 if (!enabled) {

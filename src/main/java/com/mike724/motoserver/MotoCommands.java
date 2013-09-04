@@ -6,6 +6,7 @@ import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import com.mike724.motoapi.storage.defaults.NetworkRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ public class MotoCommands implements CommandExecutor {
     private final String BAD_PERMS = ChatColor.RED + "You have insufficient permissions to run this command.";
 
     @Override
-    public boolean onCommand(CommandSender sender, bui Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (cmd.getName().equalsIgnoreCase("hub")) {
             Player targ;

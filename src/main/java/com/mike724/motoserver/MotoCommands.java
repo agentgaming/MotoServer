@@ -68,6 +68,8 @@ public class MotoCommands implements CommandExecutor {
                 MotoServer.getInstance().getServer().getMessenger().registerOutgoingPluginChannel(MotoServer.getInstance(), "BungeeCord");
                 targ.sendPluginMessage(MotoServer.getInstance(), "BungeeCord", b.toByteArray());
             }
+
+            return true;
         }
 
         if (!(sender instanceof Player)) {

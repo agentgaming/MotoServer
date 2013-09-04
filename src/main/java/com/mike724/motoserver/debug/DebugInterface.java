@@ -44,12 +44,14 @@ public class DebugInterface {
         inv = MotoServer.getInstance().getServer().createInventory(p, 36, "Rotten Potato - " + p.getName());
 
         GameMode gm = getNextGameMode(p);
-        desc[16] = gm.name().toLowerCase().substring(0, 1).toUpperCase() + gm.name().toLowerCase().substring(1) + " Mode";
+        String desc16 = gm.name().toLowerCase().substring(0, 1).toUpperCase() + gm.name().toLowerCase().substring(1) + " Mode";
 
         //Add all the base mods
         for (int i = 0; i < mods.length; i++) {
             if (i == 13) {
                 inv.setItem(i, menuItem(blocks[i], mods[i], desc[i], canEnable(i), true));
+            } else if (i == 16) {
+                inv.setItem(i, menuItem(blocks[i], mods[i], desc16, canEnable(i)));
             } else {
                 inv.setItem(i, menuItem(blocks[i], mods[i], desc[i], canEnable(i)));
             }

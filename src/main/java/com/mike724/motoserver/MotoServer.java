@@ -68,11 +68,13 @@ public class MotoServer extends JavaPlugin {
         pm.registerEvents(portalManager, this);
 
         //Setup the command listeners
-        getCommand("net").setExecutor(new MotoCommands(this));
-        getCommand("addfriend").setExecutor(new MotoCommands(this));
-        getCommand("delfriend").setExecutor(new MotoCommands(this));
-        getCommand("setrank").setExecutor(new MotoCommands(this));
-        getCommand("cmdauth").setExecutor(new MotoCommands(this));
+        MotoCommands cmdExec = new MotoCommands(this);
+        getCommand("net").setExecutor(cmdExec);
+        getCommand("addfriend").setExecutor(cmdExec);
+        getCommand("delfriend").setExecutor(cmdExec);
+        getCommand("setrank").setExecutor(cmdExec);
+        getCommand("cmdauth").setExecutor(cmdExec);
+        getCommand("hub").setExecutor(cmdExec);
 
         //Setup Debug Interface
         getServer().getPluginManager().registerEvents(new DebugInterfaceEvents(), this);

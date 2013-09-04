@@ -18,3 +18,6 @@ commands:
    cmdauth:
       description: Runs a command if the player has the desired auth
       usage: /cmdauth <player> <perms> <command>
+   spawn:
+      description: Teleport to the hub spawn.
+      usage: /hub [player]

@@ -1,6 +1,7 @@
 package com.mike724.motoserver;
 
 import com.mike724.motoapi.push.MotoPushData;
+import com.mike724.motoapi.storage.Storage;
 import com.mike724.motoapi.storage.defaults.NetworkPlayer;
 import com.mike724.motoapi.storage.defaults.NetworkRank;
 import org.bukkit.Bukkit;
@@ -9,6 +10,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class MotoCommands implements CommandExecutor {
 
@@ -23,6 +28,46 @@ public class MotoCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
+        Player targ;
+        if (args.length >= 1) {
+            targ = MotoServer.getInstance().getServer().getPlayerExact(args[0]);
+        } else {
+            if (!(sender instanceof Player)) return true;
+            targ = (Player) sender;
+        }
+
+        if (targ == null) {
+            sender.sendMessage(ChatColor.RED + "Couldn't find player!");
+            return true;
+        }
+
+        if (MotoServer.getInstance().getServer().getPluginManager().isPluginEnabled("MotoHub")) {
+            MotoServer.getInstance().getServer().dispatchCommand(sender, "spawn " + targ.getName());
+        } else {
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(b);
+
+            try {
+                out.writeUTF("Connect");
+                out.writeUTF("hub");
+            } catch (IOException e) {
+            }
+
+            Storage storage = MotoServer.getInstance().getStorage();
+
+            if (storage.cacheContains(targ.getName(), NetworkPlayer.class)) {
+                storage.saveAllObjectsForPlayer(targ.getName(), false);
+            }
+
+            final String pName = new String(targ.getName());
+            //TODO: May not be needed in a future version
+            MotoServer.getInstance().getMotoPush().cmd("pd", pName);
+
+            MotoServer.getInstance().getServer().getMessenger().registerOutgoingPluginChannel(MotoServer.getInstance(), "BungeeCord");
+            targ.sendPluginMessage(MotoServer.getInstance(), "BungeeCord", b.toByteArray());
+        }
+
         if (!(sender instanceof Player)) {
             if (cmd.getName().equalsIgnoreCase("cmdauth")) {
                 if (args.length < 3) return false;
